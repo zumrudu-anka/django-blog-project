@@ -1,0 +1,65 @@
+<style>
+    #registerForm{
+      margin:auto;
+    }
+    #registerForm div{
+      margin:auto;
+    }
+    #registerForm input{
+      background-color: bisque;
+      color: darkcyan;
+      font-weight: bold;
+      border:2px solid darkcyan;
+      border-radius: 15px 0px 15px 0px;
+    }
+    #registerForm strong{
+      color:darkcyan;
+    }
+    #registerForm button{
+      background-color: darkcyan;
+      color:bisque;
+      display: block;
+      margin: 25px auto 0px auto;
+      width: 40%;
+      height: 50px;
+      border: 3px solid bisque;
+      border-radius: 25px;
+    }
+    #registerForm .errorlist{
+      margin:50px auto 0px auto;
+      font-weight: bold;
+      color:red;
+    }
+</style>
+
+{% extends "layout.html" %}
+
+{% block body %}
+  <form method="post">{% csrf_token %}
+    <div id="registerForm">
+      <div class="row col-md-8">
+        <div class="col-md-3"><strong>Kullanıcı Adı : </strong></div>
+        <div class="col-md-5">{{form.username}}</div>
+      </div>
+      <br>
+      <div class="row col-md-8">
+        <div class="col-md-3"><strong>Parola : </strong></div>
+        <div class="col-md-5">{{form.password}}</div>
+      </div>
+      <br>
+      <div class="row col-md-8">
+        <div class="col-md-3"><strong>Parola Tekrarı : </strong></div>
+        <div class="col-md-5">{{form.confirm}}</div>
+      </div>
+      <div class="row col-md-8">
+        {{form.errors.username}}
+        {{form.errors.confirm}}
+      </div>
+      <div class="row col-md-8">
+        <button type="submit">Kayıt Ol</button>
+      </div>
+    </div>
+  </form>
+{% endblock body %}
+
+
