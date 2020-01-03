@@ -1,0 +1,55 @@
+<style>
+.btn-dark{
+  color: #fff;
+  background-color: #343a40;
+  border-color: #343a40;
+}
+.btn-dark:hover{
+  color: #fff;
+  background-color: #23272b;
+  border-color: #1d2124;
+}
+</style>
+
+{% extends 'layout.html' %}
+{% block body %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h3>Kontrol Paneli</h3>
+      <hr>
+      <p>
+        Hoşgeldiniz, <small>{{request.user.username}}</small>
+      </p>
+      <hr>
+      
+        {% if articles %}
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Başlık</th>
+                <th scope="col">Oluşturulma Tarihi</th>
+                <th scope="col">Güncelle</th>
+                <th scope="col">Sil</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for article in articles %}
+                <tr>
+                  <th scope="row">{{article.id}}</th>
+                  <td>{{article.title}}</td>
+                  <td>{{article.created_date}}</td>
+                  <td><a class = "btn btn-warning" href="/articles/update/{{article.id}}">Güncelle</a></td>
+                  <td><a class = "btn btn-danger" href="/articles/delete/{{article.id}}">Sil</a></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <div class="alert alert-danger">Henüz Bir Makaleniz Bulunmuyor!</div>
+        {% endif %}
+          
+      <a class="btn btn-dark" href="/articles/addarticle">Makale Ekle</a>
+    </div>
+  </div>
+{% endblock body %}

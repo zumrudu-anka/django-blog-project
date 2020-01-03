@@ -33,9 +33,9 @@
 </style>
 
 {% extends "layout.html" %}
-
+{% load crispy_forms_tags %}
 {% block body %}
-  <form method="post">{% csrf_token %}
+  {% comment %} <form method="post">{% csrf_token %}
     <div id="registerForm">
       <div class="row col-md-8">
         <div class="col-md-3"><strong>Kullanıcı Adı : </strong></div>
@@ -59,7 +59,18 @@
         <button type="submit">Kayıt Ol</button>
       </div>
     </div>
-  </form>
+  </form> {% endcomment %}
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h3>Kayıt Ol</h3>
+      <hr>
+      <form method = "POST">{% csrf_token %}
+        {{form|crispy}}
+        <br>
+        <button type="submit" class = "btn btn-danger">Kayıt Ol</button>
+      </form>
+    </div>
+  </div>
 {% endblock body %}
 
 
