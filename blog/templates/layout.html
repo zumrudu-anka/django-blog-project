@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <title>Blog</title>
+    <style>
+    .mybg-dark{
+        background-color: #343a40!important;
+    }
+    #sticky-footer {
+        flex-shrink: none;
+    }
+    </style>
 </head>
 <body>
     {% include "includes/navbar.html" %}
 
-    <div style="margin:100px auto 0px auto" class="container">
+    <div style="margin:100px auto 150px auto; min-height:100%;" class="container">
         {% if messages %}
             {% for message in messages %}
                 <div {% if message.tags %} class ="alert alert-{{ message.tags }}" {% endif %}>
@@ -25,7 +33,17 @@
         {% endblock body %}
 
     </div>
+    <hr>
+      <!-- Footer -->
+    <footer style = "position:fixed; bottom:0px; left:0px; right:0px; width:100%;" class="py-5 mybg-dark">
+        <div class="container">
+            <p class = "m-0 text-center text-white">Copyright &copy; 2019</p>
+        </div>
+        <!-- /.container -->
+    </footer>
     <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/code-prettify.js' %}"></script>
+
 </body>
 </html>

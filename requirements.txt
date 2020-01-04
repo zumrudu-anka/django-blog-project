@@ -1,1 +1,5 @@
 Django == 3.0.1
+Pillow
+django-crispy-forms
+django-ckeditor
+django-cleanup
