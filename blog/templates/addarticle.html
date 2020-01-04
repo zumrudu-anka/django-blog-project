@@ -6,6 +6,7 @@
       <h3>Makale Oluştur</h3>
       <hr>
       <form method = "POST">{% csrf_token %}
+        {{form.media}}
         {{form|crispy}}
         <br>
         <button type="submit" class = "btn btn-danger">Ekle</button>
