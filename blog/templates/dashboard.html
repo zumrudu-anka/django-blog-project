@@ -37,10 +37,10 @@
               {% for article in articles %}
                 <tr>
                   <th scope="row">{{article.id}}</th>
-                  <td><a href="/articles/detail/{{article.id}}">{{article.title}}</a></td>
+                  <td><a href="{% url 'article:detail' article.id %}">{{article.title}}</a></td>
                   <td>{{article.created_date}}</td>
-                  <td><a class = "btn btn-warning" href="/articles/update/{{article.id}}">Güncelle</a></td>
-                  <td><a class = "btn btn-danger" href="/articles/delete/{{article.id}}">Sil</a></td>
+                  <td><a class = "btn btn-warning" href="{% url 'article:updateArticle' article.id %}">Güncelle</a></td>
+                  <td><a class = "btn btn-danger"  href="{% url 'article:deleteArticle' article.id %}">Sil</a></td>
                 </tr>
               {% endfor %}
             </tbody>
@@ -49,7 +49,7 @@
           <div class="alert alert-danger">Henüz Bir Makaleniz Bulunmuyor!</div>
         {% endif %}
           
-      <a class="btn btn-dark" href="/articles/addarticle">Makale Ekle</a>
+      <a class="btn btn-dark" href="{% url 'article:addarticle' %}">Makale Ekle</a>
     </div>
   </div>
 {% endblock body %}

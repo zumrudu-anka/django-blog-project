@@ -1,15 +1,19 @@
-from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404, reverse
 from django.contrib import messages
-from .models import Article
+from .models import Article, Comment
 from .forms import ArticleForm
 from django.contrib.auth.decorators import login_required
 
 def articles(request):
-    articles = Article.objects.all()
+    if request.GET.get("keyword"):
+        keyword = request.GET.get("keyword")
+        articles = Article.objects.filter(title__contains = keyword)
+    else:
+        articles = Article.objects.all()
     context = {
         "articles" : articles
     }
-    return render(request,"articles.html",context)
+    return render(request,"articles.html", context)
 
 def index(request):
     #return HttpResponse('<h3>Anasayfa</h3>')
@@ -42,8 +46,11 @@ def addarticle(request):
 
 def detail(request, id):
     article = get_object_or_404(Article, id = id, author = request.user)
+    #comments = Comment.objects.filter(article = article)
+    comments = article.comments.all()
     context = {
-        "article" : article
+        "article" : article,
+        "comments" : comments,
     }
     return render(request,"articleDetail.html", context)
 
@@ -67,3 +74,15 @@ def deleteArticle(request, id):
     article = get_object_or_404(Article, author = request.user, id = id).delete()    
     messages.success(request,"Silme İşlemi Başarıyla Tamamlandı!")
     return redirect("article:dashboard")
+
+def comment(request, id):
+    article = get_object_or_404(Article, id = id)
+    if request.method == "POST":
+        author = request.POST.get("author")
+        content = request.POST.get("content")
+        if author and content:
+            Comment.objects.create(author = author, contents = content, article = article)
+        else:
+            messages.error(request,"İsim veya Yorum Alanı Boş Bırakılamaz!")
+    #return redirect("/articles/detail/" + str(id))
+    return redirect(reverse("article:detail",kwargs = {"id" : id}))

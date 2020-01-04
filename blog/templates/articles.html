@@ -10,6 +10,17 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-md-10 offset-md-3">
+        <div class="col-lg-8">
+            <form>{% csrf_token %}
+                <input type="text" name = "keyword" class = "input-sm" placeholder = "Ara..." maxlength="64">
+                <button type="submit" class="btn btn-danger">Ara</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 {% if articles %}
     {% for article in articles %}
         <div class="row">
@@ -18,7 +29,7 @@
                 <div class="col-lg-8">
 
                     <!-- Title -->
-                    <a href="/articles/detail/{{article.id}}"><h3 class="mt-4">{{article.title}}</h3></a>
+                    <a href="{% url 'article:detail' article.id %}"><h3 class="mt-4">{{article.title}}</h3></a>
 
                     <!-- Author -->
                     <p class="lead">
@@ -34,14 +45,14 @@
                     <!-- Preview Image -->
                     
                     {% if article.image %}
-                        <a href="/articles/detail/{{article.id}}"><img class="img-fluid rounded" src="{{article.image.url}}" alt="Kaynak Bulunamadı"></a>
+                        <a href="{% url 'article:detail' article.id %}"><img class="img-fluid rounded" src="{{article.image.url}}" alt="Kaynak Bulunamadı"></a>
                     {% endif %}
 
                     <hr>
 
                     <!-- Post Content -->
                     <p class="lead">{{article.content|safe|truncatewords:25}}</p>
-                    <a style = "display:block; margin: auto; width: 35%;" class="btn btn-danger" href="/articles/detail/{{article.id}}">Devamını Oku</a>
+                    <a style = "display:block; margin: auto; width: 35%;" class="btn btn-danger" href="{% url 'article:detail' article.id %}">Devamını Oku</a>
                     <hr>
 
                 </div>
@@ -50,8 +61,14 @@
         <!-- /.row -->
     {% endfor %}
 {% else %}
-    <div class="alert alert-danger">
-        Bu Blogda Herhangi Bir Makale Bulunmuyor!    
+    <div class="row">
+        <div class="col-md-10 offset-md-3">
+            <div class="col-lg-8">
+            <div class="alert alert-danger">
+                Makale Bulunamadı!    
+            </div>
+            </div>
+        </div>
     </div>
 {% endif %}
 

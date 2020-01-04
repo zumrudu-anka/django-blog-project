@@ -22,7 +22,7 @@
     <div style="margin:100px auto 150px auto; min-height:100%;" class="container">
         {% if messages %}
             {% for message in messages %}
-                <div {% if message.tags %} class ="alert alert-{{ message.tags }}" {% endif %}>
+                <div {% if message.tags %} class ="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}" {% endif %}>
                     {{message}}
                 </div>
             {% endfor %}
