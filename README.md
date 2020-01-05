@@ -1,2 +1,12 @@
 # Blog-Project-With-Django
-Blog Project
+
+## Django FrameWork ile Geliştirilmiş Blog Projesi
+
+### Usage(Kullanım):
+
+[text](https://link)
+**
+![alt](https://link)
+
+----------
+
