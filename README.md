@@ -32,7 +32,16 @@ Bunu kontrol etmek için Windows ortamında `dir` komutunu Linux ortamında ise 
     Proje dizinimize geldikten sonra `pip install -r requirements.txt` komutunu yazalım ve işlemin tamamlanmasını bekleyelim. Bu komut ile requirements.txt dosyasının içerisindeki uygulamalar
 en üstteki satırdan başlayarak sırası ile sanal ortamımıza pip tarafından kurulacaktır.
 
-    Tüm yükleme işlemi tamamlandıktan sonra proje klasörümüze(Clone yapılan reponun içindeki blog adındaki klasör. Yani requirements.txt nin olduğu dizindeki blog klasörü) girelim. Bulunduğumuz dizinde
+    Yükleme işlemi tamamlandıktan sonra proje klasörümüze(Clone yapılan reponun içindeki blog adındaki klasör. Yani requirements.txt nin olduğu dizindeki blog klasörü) girelim. Bulunduğumuz dizinde
 **manage.py** dosyasının olduğuna emin olalım ve terminalde `python manage.py runserver` komutunu yazarak sunucumuzu çalıştıralım.
-
-    İyi çalışmalar.
+    
+    **Not**: Admin paneline `127.0.0.1:8000/admin` url adresine giderek `Kullanıcı Adı = anka` ve `Parola = FDSA1234` bilgileri ile giriş yaparak ulaşabilirsiniz. Yeni bir süper kullanıcı oluşturmak için ise yine manage.py dosyasının olduğu dizinde `python manage.py createsuperuser` komutunu kullanabilirsiniz. Komutu yazıp onayladıktan sonra sırası ile kullanıcı adı, e-mail(opsiyonel), parola ve tekrar parolanızı girerek süper yetkili bir kullanıcı oluşturarak bu kullanıcı ile de admin paneline ulaşabilirsiniz.
+    
+    |Blog Projesi|
+    |:--:|
+    |![Intro](https://github.com/zumrudu-anka/Blog-Project-With-Django/blob/master/presentationMedia/1.gif)|
+    |![Intro](https://github.com/zumrudu-anka/Blog-Project-With-Django/blob/master/presentationMedia/2.gif)|
+    |![Intro](https://github.com/zumrudu-anka/Blog-Project-With-Django/blob/master/presentationMedia/3.gif)|
+    |![Intro](https://github.com/zumrudu-anka/Blog-Project-With-Django/blob/master/presentationMedia/4.gif)|
+    
+    
