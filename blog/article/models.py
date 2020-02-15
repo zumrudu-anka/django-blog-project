@@ -17,7 +17,7 @@ class Article(models.Model):
 
 class Comment(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name = "Makale", related_name = "comments")
-    author = models.CharField(max_length = 50, verbose_name = "İsim")
+    author = models.ForeignKey("auth.User", on_delete = models.CASCADE, verbose_name = "Kullanıcı")
     contents = models.CharField(max_length = 200, verbose_name = "Yorum")
     date = models.DateTimeField(auto_now_add = True, verbose_name = "Yorum Tarihi")
     def __str__(self):

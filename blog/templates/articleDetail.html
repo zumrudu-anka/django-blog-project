@@ -60,18 +60,17 @@
           <div class="card-body">
             <form method = "POST" action="{% url 'article:comment' article.id %}">{% csrf_token %}
               <div class="form-group">
-                <input name ="author" type="text" class="form-control" id = "formGroupExampleInput" placeholder="İsminiz...">
-              </div>
-              <div class="form-group">
                 <textarea name = "content" class="form-control" rows="3" placeholder="Yorumunuz..."></textarea>
               </div>
-              <button type="submit" class="btn btn-danger">Yorum Yap</button>
+              {% if request.user.is_authenticated %}
+                <button type="submit" class="btn btn-danger">Yorum Yap</button>
+              {% else %}
+                <button type="submit" class="btn btn-danger" disabled>Lütfen Giriş Yapınız</button>
+              {% endif %}
             </form>
           </div>
         </div>
-
       </div>
-
     </div>
     <!-- /.row -->
 {% endblock body %}

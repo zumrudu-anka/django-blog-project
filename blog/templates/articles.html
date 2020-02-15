@@ -1,10 +1,30 @@
 {% extends "layout.html" %}
 
 {% block body %}
+
+<style>
+    /* webkit solution */
+    ::-webkit-input-placeholder { text-align:center; }
+    /* mozilla solution */
+    input:-moz-placeholder { text-align:center; }
+    input[type='text']:focus{
+        text-align:center;
+    }
+</style>
 <div class="row">
     <div class="col-md-10 offset-md-3">
         <div class="col-lg-8">
-        <h1>Makaleler</h1>
+            <div class="row">
+                <div class="col-4">
+                    <h1>Makaleler</h1>
+                </div>
+                <div class="col-8" style="text-align: right;">
+                    <form style="height: 100%;">{% csrf_token %}
+                        <input style="height: 90%;display:inline-block; margin-top:1%; border:1px solid gray;border-radius:5px" type="text" name = "keyword" class = "input-sm" placeholder = "Ara..." maxlength="64">
+                        <button style="height: 90%;" type="submit" class="btn btn-danger">Ara</button>
+                    </form>
+                </div>
+            </div>
         <hr>
         </div>
     </div>
@@ -13,10 +33,7 @@
 <div class="row">
     <div class="col-md-10 offset-md-3">
         <div class="col-lg-8">
-            <form>{% csrf_token %}
-                <input type="text" name = "keyword" class = "input-sm" placeholder = "Ara..." maxlength="64">
-                <button type="submit" class="btn btn-danger">Ara</button>
-            </form>
+            
         </div>
     </div>
 </div>

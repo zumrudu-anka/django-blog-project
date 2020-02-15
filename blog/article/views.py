@@ -45,7 +45,7 @@ def addarticle(request):
     return render(request,"addarticle.html", context)
 
 def detail(request, id):
-    article = get_object_or_404(Article, id = id, author = request.user)
+    article = get_object_or_404(Article, id = id)
     #comments = Comment.objects.filter(article = article)
     comments = article.comments.all()
     context = {
@@ -78,11 +78,14 @@ def deleteArticle(request, id):
 def comment(request, id):
     article = get_object_or_404(Article, id = id)
     if request.method == "POST":
-        author = request.POST.get("author")
+        author = request.user
         content = request.POST.get("content")
         if author and content:
             Comment.objects.create(author = author, contents = content, article = article)
         else:
-            messages.error(request,"İsim veya Yorum Alanı Boş Bırakılamaz!")
+            if not author:
+                messages.error(request,"Lütfen Giriş Yapınız!")
+            elif not content:
+                messages.error(request,"Yorum Alanı Boş Bırakılamaz!")
     #return redirect("/articles/detail/" + str(id))
     return redirect(reverse("article:detail",kwargs = {"id" : id}))
