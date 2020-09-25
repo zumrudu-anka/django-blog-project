@@ -3,3 +3,5 @@ Pillow
 django-crispy-forms
 django-ckeditor
 django-cleanup
+gunicorn
+django-heroku
