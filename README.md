@@ -13,7 +13,7 @@
 - Go to the project folder
 - run `python -m venv myvenv` for create virtual environment which name is myvenv
 - run `pip install -r requirements`
-  
+- Secret Key:  
 > For Windows:
 > - create env.bat file in the project directory
 > - write `set SECRET_KEY=yoursecretkey` to this file
