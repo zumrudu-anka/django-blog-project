@@ -9,7 +9,7 @@
 
 ### Installation
 
-- Clone this repo to your local machine `git clone https://github.com/zumrudu-anka/django-blog-project.git`
+- Clone the repo to your local machine `git clone https://github.com/zumrudu-anka/django-blog-project.git`
 - Go to the project folder
 - run `python -m venv myvenv` for create virtual environment which name is myvenv
 - run `pip install -r requirements`
