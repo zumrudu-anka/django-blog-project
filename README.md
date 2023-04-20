@@ -39,4 +39,4 @@
 
 ## Source
 
-[https://www.udemy.com/course/sifirdan-ileri-seviyeye-python/](https://www.udemy.com/course/sifirdan-ileri-seviyeye-python/)
+[Mustafa Murat Coşkun - Sıfırdan İleri Seviyeye Python Kursu](https://www.udemy.com/course/sifirdan-ileri-seviyeye-python/)
