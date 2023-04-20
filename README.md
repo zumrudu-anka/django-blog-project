@@ -7,7 +7,7 @@
   <img src = "https://github.com/zumrudu-anka/Blog-Project-With-Django/blob/master/presentationMedia/4.gif">
 </p>
 
-### Installation
+## Installation
 
 - Clone the repo to your local machine `git clone https://github.com/zumrudu-anka/django-blog-project.git`
 - Go to the project folder
@@ -33,6 +33,10 @@
 - run `python manage.py makemigrations`
 - run `python manage.py migrate`
 
-### Usage
+## Usage
 
 - run `python manage.py runserver`
+
+## Source
+
+[https://www.udemy.com/course/sifirdan-ileri-seviyeye-python/](https://www.udemy.com/course/sifirdan-ileri-seviyeye-python/)
