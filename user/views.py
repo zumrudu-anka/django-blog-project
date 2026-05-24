@@ -3,6 +3,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from .forms import *
+
+
 def register(request):
     form = RegisterForm(request.POST or None)
     if form.is_valid():
@@ -18,6 +20,7 @@ def register(request):
         'form': form
     }
     return render(request, "register.html", context)
+
 
 def loginUser(request):
     form  = LoginForm(request.POST or None)
