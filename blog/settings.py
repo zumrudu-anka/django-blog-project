@@ -26,7 +26,7 @@ SECRET_KEY = "f82s09b^9-6%nz#!kt%%&ln=wedk+$-+)3=t+9i15!fovym(78"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["blog.yazilimyolu.com", "www.blog.yazilimyolu.com"]
 
 # Application definition
 
