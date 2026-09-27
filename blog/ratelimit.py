@@ -6,10 +6,13 @@ yavaşlatmak içindir. Gerçek bir DDoS'u uygulama katmanında durdurmak mümkü
 değildir; o iş Cloudflare veya nginx `limit_req` gibi önde duran bir katmanın
 görevidir.
 """
+import logging
 from functools import wraps
 
 from django.core.cache import cache
 from django.shortcuts import render
+
+logger = logging.getLogger(__name__)
 
 
 def client_ip(request):
@@ -20,6 +23,16 @@ def client_ip(request):
     if forwarded:
         return forwarded.split(",")[-1].strip()
     return request.META.get("REMOTE_ADDR", "")
+
+
+def _hit(cache_key, period):
+    """Penceredeki sayacı bir artırır ve yeni değeri döndürür."""
+    cache.add(cache_key, 0, period)
+    try:
+        return cache.incr(cache_key)
+    except ValueError:
+        cache.set(cache_key, 1, period)
+        return 1
 
 
 def ratelimit(key, limit, period, by = "ip"):
@@ -39,12 +52,13 @@ def ratelimit(key, limit, period, by = "ip"):
                 ident = client_ip(request)
             cache_key = "rl:{}:{}".format(key, ident)
 
-            cache.add(cache_key, 0, period)
             try:
-                count = cache.incr(cache_key)
-            except ValueError:
-                cache.set(cache_key, 1, period)
-                count = 1
+                count = _hit(cache_key, period)
+            except Exception:
+                # Sayaç tutulamıyorsa (ör. cache tablosu yok) siteyi çökertmek yerine
+                # isteği geçir; sınırlama bu süre boyunca devre dışı kalır.
+                logger.exception("Hız sınırlayıcı cache'e erişemedi; istek sınırlanmadan geçirildi.")
+                return view(request, *args, **kwargs)
 
             if count > limit:
                 context = {"wait_minutes": max(1, period // 60)}

@@ -40,9 +40,8 @@
 ## Deployment
 
 - Set `SECRET_KEY` and `DJANGO_DEBUG=False` as environment variables (the app refuses to start without a `SECRET_KEY` when debug is off)
-- run `python manage.py migrate`
-- run `python manage.py createcachetable` (used by the rate limiter in `blog/ratelimit.py`)
-- On Coolify these run automatically on every start via `nixpacks.toml`; create an admin once with `python manage.py createsuperuser`
+- run `python manage.py migrate` (also creates the cache table used by the rate limiter in `blog/ratelimit.py`)
+- On Coolify, Nixpacks' default start command already runs `migrate` on every start; create an admin once with `python manage.py createsuperuser`
 - run `python manage.py collectstatic --noinput`
 - The app rate-limits login, sign-up, comments and new articles, but real DDoS protection has to happen in front of Django (e.g. Cloudflare or nginx `limit_req`)
 - Serve with `gunicorn blog.wsgi` behind an HTTPS proxy; user uploads in `media/` must be served by the web server when `DEBUG` is off
