@@ -1,4 +1,3 @@
-from django.contrib import admin
 from django.urls import path
 from .views import *
 
@@ -12,5 +11,4 @@ urlpatterns = [
     path('update/<int:id>', updateArticle, name = "updateArticle"),
     path('delete/<int:id>', deleteArticle, name = "deleteArticle"),
     path('comment/<int:id>', comment, name = "comment"),
-
 ]

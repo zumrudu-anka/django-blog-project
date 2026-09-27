@@ -1,92 +1,61 @@
 {% extends "layout.html" %}
 
+{% block title %}Makaleler{% endblock title %}
+
 {% block body %}
+<div class="container">
+    <header class="page-head section-head" style="margin-bottom:0">
+        <div>
+            <h1>Makaleler</h1>
+            <p>Topluluğun paylaştığı tüm yazılar</p>
+        </div>
+        <form class="search" method="GET" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <label for="keyword" class="visually-hidden">Makalelerde ara</label>
+            <input id="keyword" type="search" name="keyword" value="{{ keyword }}" placeholder="Makalelerde ara…" maxlength="64">
+            <button type="submit" class="btn btn-primary btn-sm">Ara</button>
+        </form>
+    </header>
 
-<style>
-    /* webkit solution */
-    ::-webkit-input-placeholder { text-align:center; }
-    /* mozilla solution */
-    input:-moz-placeholder { text-align:center; }
-    input[type='text']:focus{
-        text-align:center;
-    }
-</style>
-<div class="row">
-    <div class="col-md-10 offset-md-3">
-        <div class="col-lg-8">
-            <div class="row">
-                <div class="col-4">
-                    <h1>Makaleler</h1>
-                </div>
-                <div class="col-8" style="text-align: right;">
-                    <form style="height: 100%;">{% csrf_token %}
-                        <input style="height: 90%;display:inline-block; margin-top:1%; border:1px solid gray;border-radius:5px" type="text" name = "keyword" class = "input-sm" placeholder = "Ara..." maxlength="64">
-                        <button style="height: 90%;" type="submit" class="btn btn-danger">Ara</button>
-                    </form>
-                </div>
+    <section class="section" style="padding-top:24px">
+        {% if keyword %}
+            <p class="search-summary">
+                “{{ keyword }}” için {{ page.paginator.count }} sonuç bulundu · <a href="{% url 'article:articles' %}">Aramayı temizle</a>
+            </p>
+        {% endif %}
+
+        {% if page.object_list %}
+            <div class="card-grid">
+                {% for article in page %}
+                    {% include "includes/article_card.html" %}
+                {% endfor %}
             </div>
-        <hr>
-        </div>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-md-10 offset-md-3">
-        <div class="col-lg-8">
-            
-        </div>
-    </div>
-</div>
-
-{% if articles %}
-    {% for article in articles %}
-        <div class="row">
-            <div class="col-md-10 offset-md-3">
-                <!-- Post Content Column -->
-                <div class="col-lg-8">
-
-                    <!-- Title -->
-                    <a href="{% url 'article:detail' article.id %}"><h3 class="mt-4">{{article.title}}</h3></a>
-
-                    <!-- Author -->
-                    <p class="lead">
-                    {{article.author.username}} tarafından yayınlandı.
-                    </p>
-
-                    <hr>
-                    <!-- Date/Time -->
-                    <p>{{article.created_date}}</p>
-
-                    <hr>
-
-                    <!-- Preview Image -->
-                    
-                    {% if article.image %}
-                        <a href="{% url 'article:detail' article.id %}"><img class="img-fluid rounded" src="{{article.image.url}}" alt="Kaynak Bulunamadı"></a>
+            {% if page.has_other_pages %}
+                <nav class="pagination" aria-label="Sayfalar">
+                    {% if page.has_previous %}
+                        <a class="btn btn-ghost btn-sm" href="?page={{ page.previous_page_number }}{% if keyword %}&keyword={{ keyword|urlencode }}{% endif %}">&larr; Önceki</a>
                     {% endif %}
-
-                    <hr>
-
-                    <!-- Post Content -->
-                    <p class="lead">{{article.content|safe|truncatewords:25}}</p>
-                    <a style = "display:block; margin: auto; width: 35%;" class="btn btn-danger" href="{% url 'article:detail' article.id %}">Devamını Oku</a>
-                    <hr>
-
-                </div>
+                    <span class="current">Sayfa {{ page.number }} / {{ page.paginator.num_pages }}</span>
+                    {% if page.has_next %}
+                        <a class="btn btn-ghost btn-sm" href="?page={{ page.next_page_number }}{% if keyword %}&keyword={{ keyword|urlencode }}{% endif %}">Sonraki &rarr;</a>
+                    {% endif %}
+                </nav>
+            {% endif %}
+        {% else %}
+            <div class="empty">
+                <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div>
+                {% if keyword %}
+                    <h3>Sonuç bulunamadı</h3>
+                    <p>Farklı bir kelimeyle aramayı dene.</p>
+                    <a class="btn btn-ghost" href="{% url 'article:articles' %}">Tüm makaleler</a>
+                {% else %}
+                    <h3>Henüz makale yok</h3>
+                    <p>İlk yazıyı yayınlayan sen ol.</p>
+                    <a class="btn btn-primary" href="{% url 'article:addarticle' %}">Yazı yaz</a>
+                {% endif %}
             </div>
-        </div>
-        <!-- /.row -->
-    {% endfor %}
-{% else %}
-    <div class="row">
-        <div class="col-md-10 offset-md-3">
-            <div class="col-lg-8">
-            <div class="alert alert-danger">
-                Makale Bulunamadı!    
-            </div>
-            </div>
-        </div>
-    </div>
-{% endif %}
-
+        {% endif %}
+    </section>
+</div>
 {% endblock body %}

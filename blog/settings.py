@@ -21,12 +21,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# Canlı ortamda DJANGO_DEBUG=False olarak ayarlayın.
+DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = ["blog.yazilimyolu.com", "www.blog.yazilimyolu.com"]
+SECRET_KEY = os.environ.get("SECRET_KEY")
+if not SECRET_KEY:
+    if not DEBUG:
+        raise RuntimeError("Canlı ortamda SECRET_KEY ortam değişkeni tanımlanmalı.")
+    SECRET_KEY = "django-insecure-dev-key-change-me"
+
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "blog.yazilimyolu.com", "www.blog.yazilimyolu.com"]
+CSRF_TRUSTED_ORIGINS = ["https://blog.yazilimyolu.com", "https://www.blog.yazilimyolu.com"]
 
 # Application definition
 
@@ -39,9 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'article',
     'user',
-    'crispy_forms',
-    'crispy_bootstrap4',
-    'ckeditor',
+    'django_prose_editor',
     'django_cleanup',
 ]
 
@@ -61,7 +65,7 @@ ROOT_URLCONF = 'blog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["templates"],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,6 +81,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'blog.wsgi.application'
 
+AUTH_USER_MODEL = 'user.User'
+
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -89,6 +95,15 @@ DATABASES = {
     )
 }
 
+# Hız sınırlayıcı (blog/ratelimit.py) sayaçlarını tüm worker'lar arasında
+# paylaşabilmek için veritabanı cache'i. Tablo: `python manage.py createcachetable`
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'cache_table',
+    }
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -99,6 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {'min_length': 8},
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -118,8 +134,6 @@ TIME_ZONE = 'Europe/Istanbul'
 
 USE_I18N = True
 
-USE_L10N = True
-
 USE_TZ = True
 
 
@@ -134,21 +148,21 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR,"staticfiles")
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-CKEDITOR_CONFIGS = {
-    "default": {
-        "removePlugins" : "stylesheetparser",
-        "allowedContent" : True,
-        "width" : "100%",
-    }
-}
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"},
+}
 
-CSRF_TRUSTED_ORIGINS = ['https://a.domainim.com']
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 60 * 60 * 24 * 30
+    SECURE_CONTENT_TYPE_NOSNIFF = True

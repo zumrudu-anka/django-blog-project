@@ -1,15 +1,36 @@
 {% extends 'layout.html' %}
 
+{% block title %}Hakkımızda{% endblock title %}
+
 {% block body %}
-  <h3 style="text-align: center; margin-top : 11rem; margin-bottom: 3rem;">Hakkımızda</h3>
-  <hr>
-  <p style="text-align:justify;">
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam adipisci, voluptas eum sapiente iure est. Modi, eos dolor eaque, quo distinctio magni, dicta delectus quasi obcaecati aut quae eius reprehenderit.
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta ratione, in similique fuga velit ea. Optio accusantium ullam provident enim sunt ab veritatis voluptates delectus, laudantium rerum nam eligendi officiis!
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident nesciunt nisi tempora odit, praesentium reiciendis aperiam saepe magnam facere iste consequuntur vero, earum ducimus veniam ullam suscipit illum aliquid! Minima.
-    At, nesciunt quo ipsum fugiat consequuntur beatae ipsam velit! Voluptas architecto ducimus corporis, exercitationem, modi, porro sapiente blanditiis totam distinctio cumque enim dolore deserunt dolorum quia nam culpa harum! Voluptatum?
-    Est blanditiis sequi eos voluptas adipisci totam, tempore aut expedita id, accusamus facilis aliquid veritatis enim accusantium molestiae quaerat tenetur voluptate odio quos nisi consectetur praesentium. Eligendi, enim dolorum. Provident.
-    Deleniti corrupti perspiciatis hic eius! Vero repellendus odio suscipit dolorem eveniet inventore asperiores ad beatae assumenda explicabo deserunt doloremque, quidem voluptatum error dignissimos. Porro similique rem inventore dolores quas laborum?
-  </p>
-  <hr>
+<div class="container container-narrow">
+    <header class="page-head">
+        <span class="eyebrow">Hakkımızda</span>
+        <h1 style="margin-top:16px">Bilgi paylaştıkça çoğalır.</h1>
+    </header>
+
+    <div class="prose">
+        <p>Bu blog, geliştiricilerin öğrendiklerini sade ve anlaşılır bir şekilde paylaşabilmesi için kuruldu. Bir hatayı çözmek için saatler harcadıysan, yeni bir teknolojiyi denediysen ya da sadece bir fikrini anlatmak istiyorsan burası tam sana göre.</p>
+        <p>Proje, Django ile geliştirilmiş kişisel bir öğrenme çalışmasıdır. Kullanıcı kaydı, zengin metin editörüyle makale yazma, kapak fotoğrafı ekleme, arama ve yorumlar gibi bir blogun temel özelliklerini içerir.</p>
+    </div>
+
+    <div class="features">
+        <div class="feature">
+            <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div>
+            <h3>Kolayca yaz</h3>
+            <p>Zengin metin editörüyle başlık, liste, kod ve görsel ekle.</p>
+        </div>
+        <div class="feature">
+            <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div>
+            <h3>Hızlıca bul</h3>
+            <p>Aradığın konuyu başlık ve içerikte arayarak saniyeler içinde bul.</p>
+        </div>
+        <div class="feature">
+            <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.4A8 8 0 1 1 21 12z"/></svg></div>
+            <h3>Birlikte tartış</h3>
+            <p>Yazıların altına yorum bırak, soru sor, katkıda bulun.</p>
+        </div>
+    </div>
+    <div style="height:96px"></div>
+</div>
 {% endblock body %}

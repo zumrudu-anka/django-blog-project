@@ -1,76 +1,82 @@
 {% extends "layout.html" %}
 
+{% block title %}{{ article.title }}{% endblock title %}
+{% block description %}{{ article.excerpt }}{% endblock description %}
+
 {% block body %}
-    <div class="row">
-
-      <!-- Post Content Column -->
-      <div class="col-lg-8">
-
-        <!-- Title -->
-        <h1 class="mt-4">{{article.title}}</h1>
-
-        <!-- Author -->
-        <p class="lead">
-        {{article.author.username}} tarafından yayınlandı.
-        </p>
-
-        <hr>
-
-        <!-- Date/Time -->
-        <p>{{article.created_date}}</p>
-
-        <hr>
-
-        <!-- Preview Image -->
-        
-        {% if article.image %}
-            <img class="img-fluid rounded" src="{{article.image.url}}" alt="Kaynak Bulunamadı">
-        {% endif %}
-
-        <hr>
-
-        <!-- Post Content -->
-        <p class="lead">{{article.content|safe}}</p>
-
-        <hr>
-        <h4>Yorumlar</h4>
-        <hr>
-        {% if comments %}
-          {% for comment in comments %}
-            <!-- Single Comment -->
-            <div class="media mb-4">
-              <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-              <div class="media-body">
-                <h5 class="mt-0">{{comment.author}}<span style="font-size: medium;font-weight: normal;font-style: italic;float: right;">{{comment.date}}</span></h5>
-                {{comment.contents}}
-              </div>
+<article>
+    <header class="container container-narrow post-header">
+        <a class="back-link" href="{% url 'article:articles' %}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Tüm makaleler
+        </a>
+        <h1>{{ article.title }}</h1>
+        <div class="post-meta">
+            <span class="avatar avatar-lg">{{ article.author.username|make_list|first }}</span>
+            <div>
+                <span class="author-name">{{ article.author.username }}</span>
+                <div class="meta">
+                    <time datetime="{{ article.created_date|date:'c' }}">{{ article.created_date|date:"j F Y" }}</time>
+                    <span class="dot"></span>
+                    <span>{{ article.reading_time }} dk okuma</span>
+                </div>
             </div>
-            <hr>
-          {% endfor %}
-        {% else %}
-          <div class="alert alert-danger">
-            Bu Makaleye Herhangi Bir Yorum Yapılmamış...
-            <br>
-            İlk Yorum Yapan Siz Olun!
-          </div>
-        {% endif %}
-        <!-- Comments Form -->
-        <div class="card my-4">
-          <h5 class="card-header">Yorum Ekle</h5>
-          <div class="card-body">
-            <form method = "POST" action="{% url 'article:comment' article.id %}">{% csrf_token %}
-              <div class="form-group">
-                <textarea name = "content" class="form-control" rows="3" placeholder="Yorumunuz..."></textarea>
-              </div>
-              {% if request.user.is_authenticated %}
-                <button type="submit" class="btn btn-danger">Yorum Yap</button>
-              {% else %}
-                <button type="submit" class="btn btn-danger" disabled>Lütfen Giriş Yapınız</button>
-              {% endif %}
-            </form>
-          </div>
+            {% if request.user == article.author %}
+                <a class="btn btn-ghost btn-sm" style="margin-left:auto" href="{% url 'article:updateArticle' article.id %}">Düzenle</a>
+            {% endif %}
         </div>
-      </div>
+    </header>
+
+    {% if article.image %}
+        <figure class="post-cover">
+            <img src="{{ article.image.url }}" alt="">
+        </figure>
+    {% endif %}
+
+    <div class="container container-narrow">
+        <div class="prose">{{ article.content|safe }}</div>
+
+        <section class="comments" id="yorumlar">
+            <h2>Yorumlar <span class="count-badge">{{ comments|length }}</span></h2>
+
+            {% if request.user == article.author %}
+                <p class="own-note">Bu senin yazın, okurlarının yorumlarını burada görebilirsin.</p>
+            {% elif request.user.is_authenticated %}
+                <form class="comment-form" method="POST" action="{% url 'article:comment' article.id %}">{% csrf_token %}
+                    <label for="comment-content" class="visually-hidden">Yorumunuz</label>
+                    <textarea id="comment-content" name="content" maxlength="200" placeholder="Düşüncelerini paylaş…" required></textarea>
+                    <div class="comment-form-footer">
+                        <span>En fazla 200 karakter</span>
+                        <button type="submit" class="btn btn-primary btn-sm">Yorum yap</button>
+                    </div>
+                </form>
+            {% else %}
+                <div class="login-prompt">
+                    <p>Yorum yapabilmek için giriş yapmalısın.</p>
+                    <a class="btn btn-primary btn-sm" href="{% url 'user:login' %}?next={{ request.path|urlencode }}">Giriş yap</a>
+                </div>
+            {% endif %}
+
+            {% if comments %}
+                <ul class="comment-list">
+                    {% for comment in comments %}
+                        <li class="comment">
+                            <span class="avatar">{{ comment.author.username|make_list|first }}</span>
+                            <div class="comment-body">
+                                <div class="comment-head">
+                                    <strong>{{ comment.author.username }}</strong>
+                                    <time datetime="{{ comment.date|date:'c' }}" title="{{ comment.date|date:'j F Y H:i' }}">{{ comment.date|timesince }} önce</time>
+                                </div>
+                                <p>{{ comment.contents }}</p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p style="color:var(--muted)">Henüz yorum yok. İlk yorumu sen yap!</p>
+            {% endif %}
+        </section>
+        <div style="height:96px"></div>
     </div>
-    <!-- /.row -->
+</article>
 {% endblock body %}

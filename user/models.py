@@ -1,3 +1,12 @@
-from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
+
+class User(AbstractUser):
+    """
+    Django'nun hazır kullanıcı modeliyle birebir aynıdır; yalnızca tablo adı
+    `auth_user` yerine `User` olsun diye projeye taşındı.
+    """
+
+    class Meta(AbstractUser.Meta):
+        db_table = "User"
+        swappable = "AUTH_USER_MODEL"

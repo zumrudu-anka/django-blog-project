@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}Biraz yavaşla{% endblock title %}
+
+{% block body %}
+<div class="auth">
+    <div class="panel" style="text-align:center">
+        <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <h1 style="font-size:1.6rem">Biraz yavaşlayalım</h1>
+        <p style="color:var(--muted);margin:0 0 24px">Kısa sürede çok fazla istek gönderdin. Lütfen {{ wait_minutes }} dakika kadar bekleyip tekrar dene.</p>
+        <a class="btn btn-primary" href="{% url 'index' %}">Anasayfaya dön</a>
+    </div>
+</div>
+{% endblock body %}

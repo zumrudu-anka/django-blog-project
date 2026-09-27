@@ -1,0 +1,23 @@
+{% if form.non_field_errors %}
+    <div class="form-errors">{{ form.non_field_errors }}</div>
+{% endif %}
+{% for field in form.hidden_fields %}{{ field }}{% endfor %}
+{% for field in form.visible_fields %}
+    {% if field.name in form.honeypot_fields %}
+        <div class="hp" aria-hidden="true">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+        </div>
+    {% else %}
+        <div class="field{% if field.errors %} has-error{% endif %}">
+            <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %}<span class="required">*</span>{% endif %}</label>
+            {% if field.widget_type == "clearablefile" %}
+                <div class="file-input">{{ field }}</div>
+            {% else %}
+                {{ field }}
+            {% endif %}
+            {% if field.help_text %}<p class="field-help">{{ field.help_text }}</p>{% endif %}
+            {{ field.errors }}
+        </div>
+    {% endif %}
+{% endfor %}

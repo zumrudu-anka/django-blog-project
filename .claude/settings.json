@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(C:\\Users\\Anka\\Documents\\*)",
+      "Read(C:\\Users\\Anka\\Desktop\\*)",
+      "Read(C:\\Users\\Anka\\Downloads\\*)",
+      "Read(C:\\Users\\Anka\\Pictures\\*)",
+      "Read(C:\\Users\\Anka\\Videos\\*)",
+      "Read(C:\\Users\\Anka\\Music\\*)",
+      "Read(C:\\Users\\Anka\\OneDrive\\*)",
+      "Read(C:\\Users\\Anka\\AppData\\*)",
+      "Read(C:\\Users\\Anka\\Contacts\\*)",
+      "Read(C:\\Users\\Anka\\Favorites\\*)",
+      "Read(C:\\Users\\Anka\\Saved Games\\*)",
+      "Read(C:\\Users\\Anka\\Searches\\*)",
+      "Read(C:\\Program Files\\*)",
+      "Read(C:\\Program Files (x86)\\*)",
+      "Read(C:\\Windows\\*)",
+      "Write(C:\\Users\\Anka\\Documents\\*)",
+      "Write(C:\\Users\\Anka\\Desktop\\*)",
+      "Write(C:\\Users\\Anka\\Downloads\\*)",
+      "Write(C:\\Users\\Anka\\Pictures\\*)",
+      "Write(C:\\Users\\Anka\\Videos\\*)",
+      "Write(C:\\Users\\Anka\\AppData\\*)",
+      "Write(C:\\Program Files\\*)",
+      "Write(C:\\Program Files (x86)\\*)",
+      "Write(C:\\Windows\\*)",
+      "Read(D:\\*)",
+      "Write(D:\\*)",
+      "Read(E:\\*)",
+      "Write(E:\\*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
+    ]
+  }
+}
