@@ -1,7 +1,0 @@
-# Coolify (Nixpacks) başlatma komutu. Her deploy'da güvenle tekrar çalışır:
-# - adopt_auth_user: kullanıcı tablosu taşındığı için, migrate'ten önce gerekli
-#   (bkz. user/management/commands/adopt_auth_user.py); gerekmiyorsa bir şey yapmaz.
-# - createcachetable: hız sınırlayıcının kullandığı cache tablosu; varsa atlanır.
-# gunicorn, Coolify'ın verdiği PORT değişkenini kendisi okur.
-[start]
-cmd = "python manage.py adopt_auth_user && python manage.py migrate --noinput && python manage.py createcachetable && gunicorn blog.wsgi"

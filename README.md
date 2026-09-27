@@ -40,9 +40,9 @@
 ## Deployment
 
 - Set `SECRET_KEY` and `DJANGO_DEBUG=False` as environment variables (the app refuses to start without a `SECRET_KEY` when debug is off)
-- **Existing databases only, once:** run `python manage.py adopt_auth_user` before `migrate`. Users moved from Django's built-in `auth_user` table to the project's own `user.User` model (table `User`); without this step `migrate` stops with `InconsistentMigrationHistory`. It does nothing on a fresh database and is safe to re-run. Take a database backup first.
-- run `python manage.py migrate` (also sanitizes existing article HTML and renames the tables to `User`, `Article` and `Comment`)
+- run `python manage.py migrate`
 - run `python manage.py createcachetable` (used by the rate limiter in `blog/ratelimit.py`)
+- On Coolify these run automatically on every start via `nixpacks.toml`; create an admin once with `python manage.py createsuperuser`
 - run `python manage.py collectstatic --noinput`
 - The app rate-limits login, sign-up, comments and new articles, but real DDoS protection has to happen in front of Django (e.g. Cloudflare or nginx `limit_req`)
 - Serve with `gunicorn blog.wsgi` behind an HTTPS proxy; user uploads in `media/` must be served by the web server when `DEBUG` is off
