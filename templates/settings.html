@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}Profili düzenle{% endblock title %}
+
+{% block body %}
+<div class="container container-narrow">
+    <header class="page-head">
+        <a class="back-link" href="{{ request.user.get_absolute_url }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Profilime dön
+        </a>
+        <h1>Profili düzenle</h1>
+        <p>Ad soyad girersen yazılarında kullanıcı adın yerine görünür.</p>
+    </header>
+
+    <form class="panel" enctype="multipart/form-data" method="POST" style="margin-bottom:96px">{% csrf_token %}
+        <div class="settings-preview">
+            {% include "includes/avatar.html" with person=request.user size="xl" %}
+            <div>
+                <strong>{{ request.user.display_name }}</strong>
+                <span>@{{ request.user.username }}</span>
+            </div>
+        </div>
+        {% include "includes/form_fields.html" %}
+        <div class="form-actions">
+            <a class="btn btn-ghost" href="{{ request.user.get_absolute_url }}">Vazgeç</a>
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+        </div>
+    </form>
+</div>
+{% endblock body %}

@@ -1,0 +1,4 @@
+{% comment %}
+    Kullanım: {% include "includes/avatar.html" with person=article.author size="lg" %}
+    Profil fotoğrafı varsa onu, yoksa görünen adın baş harfini gösterir.
+{% endcomment %}<span class="avatar{% if size %} avatar-{{ size }}{% endif %}">{% if person.avatar %}<img src="{{ person.avatar.url }}" alt="" loading="lazy">{% else %}{{ person.display_name|make_list|first }}{% endif %}</span>

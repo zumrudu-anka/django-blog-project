@@ -570,6 +570,66 @@ h1, h2, h3, h4 {
     text-transform: uppercase;
 }
 .avatar-lg { width: 44px; height: 44px; font-size: 1.05rem; }
+.avatar-xl { width: 112px; height: 112px; font-size: 2.6rem; }
+.avatar { overflow: hidden; }
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Kartın tamamı yazıya link; yazar linki onun üstünde tıklanabilir kalsın */
+.card-footer .author { position: relative; z-index: 1; }
+.card-footer .author:hover, .author-name:hover, .comment-author:hover { color: var(--accent); }
+a.author-name { color: var(--text); }
+.comment-author { color: var(--text); font-weight: 600; }
+
+/* Menüdeki profil linki */
+.nav-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px;
+    border-radius: 999px;
+    color: var(--text);
+    font-weight: 500;
+}
+.nav-profile .avatar { width: 32px; height: 32px; }
+.nav-profile:hover, .nav-profile.is-active { box-shadow: 0 0 0 2px var(--accent); color: var(--text); }
+.nav-profile-name { display: none; }
+@media (max-width: 760px) {
+    .nav-profile { padding: 8px 12px; border-radius: var(--radius-sm); }
+    .nav-profile:hover, .nav-profile.is-active { box-shadow: none; background: var(--surface-2); }
+    .nav-profile-name { display: inline; }
+}
+
+/* Profil sayfası */
+.profile-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 28px;
+    padding: 56px 0 40px;
+}
+.profile-head .avatar-xl { box-shadow: 0 0 0 4px var(--surface), 0 0 0 6px var(--accent-soft); }
+.profile-info { flex: 1; min-width: 0; }
+.profile-info h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin-bottom: 2px; }
+.profile-handle { margin: 0 0 12px; color: var(--muted); }
+.profile-bio { max-width: 620px; margin: 0 0 14px; color: var(--text-soft); font-size: 1.05rem; white-space: pre-line; }
+@media (max-width: 640px) {
+    .profile-head { flex-direction: column; align-items: center; text-align: center; }
+    .profile-head .meta { justify-content: center; }
+    .profile-bio { margin-left: auto; margin-right: auto; }
+}
+
+.settings-preview {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+}
+.settings-preview .avatar-xl { width: 80px; height: 80px; font-size: 2rem; }
+.settings-preview strong { display: block; font-size: 1.15rem; }
+.settings-preview span:not(.avatar) { color: var(--muted); }
+
+.dash-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
 /* ==========================================================================
    Search + pagination

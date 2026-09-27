@@ -15,6 +15,12 @@
             <ul class="nav-actions">
                 {% if request.user.is_authenticated %}
                     <li>
+                        <a class="nav-profile {% if name == 'profile' or name == 'settings' %}is-active{% endif %}" href="{{ request.user.get_absolute_url }}" title="Profilim">
+                            {% include "includes/avatar.html" with person=request.user %}
+                            <span class="nav-profile-name">{{ request.user.display_name }}</span>
+                        </a>
+                    </li>
+                    <li>
                         <form method="POST" action="{% url 'user:logout' %}">{% csrf_token %}
                             <button type="submit" class="nav-link">Çıkış yap</button>
                         </form>

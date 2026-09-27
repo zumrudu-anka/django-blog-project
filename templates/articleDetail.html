@@ -12,9 +12,9 @@
         </a>
         <h1>{{ article.title }}</h1>
         <div class="post-meta">
-            <span class="avatar avatar-lg">{{ article.author.username|make_list|first }}</span>
+            <a href="{{ article.author.get_absolute_url }}">{% include "includes/avatar.html" with person=article.author size="lg" %}</a>
             <div>
-                <span class="author-name">{{ article.author.username }}</span>
+                <a class="author-name" href="{{ article.author.get_absolute_url }}">{{ article.author.display_name }}</a>
                 <div class="meta">
                     <time datetime="{{ article.created_date|date:'c' }}">{{ article.created_date|date:"j F Y" }}</time>
                     <span class="dot"></span>
@@ -61,10 +61,10 @@
                 <ul class="comment-list">
                     {% for comment in comments %}
                         <li class="comment">
-                            <span class="avatar">{{ comment.author.username|make_list|first }}</span>
+                            <a href="{{ comment.author.get_absolute_url }}">{% include "includes/avatar.html" with person=comment.author %}</a>
                             <div class="comment-body">
                                 <div class="comment-head">
-                                    <strong>{{ comment.author.username }}</strong>
+                                    <a class="comment-author" href="{{ comment.author.get_absolute_url }}">{{ comment.author.display_name }}</a>
                                     <time datetime="{{ comment.date|date:'c' }}" title="{{ comment.date|date:'j F Y H:i' }}">{{ comment.date|timesince }} önce</time>
                                 </div>
                                 <p>{{ comment.contents }}</p>
